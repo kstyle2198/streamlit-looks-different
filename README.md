@@ -6,6 +6,9 @@ Streamlit is an open-source framework for building data-driven dashboards and we
 🐬 **Main Features**
 - hovering effect
 - parallax effect
+- distortion effect
+- geometry effect
+- ripple drop wave effect
 
 ![image info](./images/looks_different.gif)
 

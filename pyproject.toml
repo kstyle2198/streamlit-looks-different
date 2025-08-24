@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "matplotlib>=3.10.5",
+    "scipy>=1.16.1",
     "streamlit>=1.48.1",
     "streamlit-carousel>=1.1.2",
 ]
