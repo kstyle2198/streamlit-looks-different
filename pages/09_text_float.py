@@ -160,3 +160,151 @@ st.markdown(
 
 # HTML + JS 렌더링
 html(word_js, height=200)
+
+
+
+### 아래는 CAVAS가 아니라 백그라운드 전체 화면 위에 단어가 떠다니는 효과
+# import streamlit as st
+# from streamlit.components.v1 import html
+
+# # Page configuration
+# st.set_page_config(
+#     page_title="Floating Words Fullscreen",
+#     page_icon="✨",
+#     layout="wide",
+#     initial_sidebar_state="expanded"
+# )
+
+# # CSS + JS: 전체 화면 최상위 레이어에 단어 효과
+# fullscreen_effect = """
+# <style>
+# body {
+#     background: #ffffff; /* 전체 흰색 배경 */
+#     overflow: hidden;
+#     margin: 0;
+#     padding: 0;
+# }
+
+# /* 전체 화면 최상위 레이어 */
+# #floating-layer {
+#     position: fixed;
+#     top: 0;
+#     left: 0;
+#     width: 100vw;
+#     height: 100vh;
+#     z-index: 9999; /* 모든 콘텐츠 위 */
+#     pointer-events: none; /* 클릭 방해 X */
+# }
+
+# /* 단어 스타일 */
+# .floating-word {
+#     position: absolute;
+#     font-size: 28px;
+#     font-weight: bold;
+#     opacity: 0;
+#     white-space: nowrap;
+#     transition: opacity 2s ease-in-out;
+# }
+# </style>
+
+# <div id="floating-layer"></div>
+
+# <script>
+# let sentence = "Streamlit makes data apps simple and beautiful";
+# let words = sentence.split(" ");
+
+# // 파스텔톤 색상
+# let colors = [
+#     '#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+#     '#E0BBE4', '#FFDAC1', '#B5EAD7', '#C7CEEA'
+# ];
+
+# function spawnWord() {
+#     let layer = document.getElementById("floating-layer");
+#     let word = words[Math.floor(Math.random() * words.length)];
+#     let span = document.createElement("span");
+#     span.className = "floating-word";
+#     span.innerText = word;
+#     span.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+#     // 랜덤 위치
+#     let startX = Math.random() * window.innerWidth;
+#     let startY = Math.random() * window.innerHeight;
+#     span.style.left = startX + "px";
+#     span.style.top = startY + "px";
+
+#     layer.appendChild(span);
+
+#     // 이동 방향 (랜덤)
+#     let dx = (Math.random() - 0.5) * 1.5;
+#     let dy = (Math.random() - 0.5) * 1.5;
+
+#     let opacity = 0;
+#     let life = 0;
+#     let maxLife = 300 + Math.random() * 200;
+
+#     setTimeout(() => { span.style.opacity = 1; }, 50);
+
+#     function animate() {
+#         life++;
+#         startX += dx;
+#         startY += dy;
+#         span.style.left = startX + "px";
+#         span.style.top = startY + "px";
+
+#         if (life > maxLife * 0.7) {
+#             opacity -= 0.01;
+#             span.style.opacity = opacity;
+#         } else if (opacity < 1) {
+#             opacity += 0.02;
+#             span.style.opacity = opacity;
+#         }
+
+#         if (life > maxLife || opacity <= 0) {
+#             span.remove();
+#         } else {
+#             requestAnimationFrame(animate);
+#         }
+#     }
+
+#     animate();
+# }
+
+# // 0.15초마다 단어 생성
+# setInterval(spawnWord, 150);
+# </script>
+# """
+
+# # Streamlit 콘텐츠
+# st.markdown(
+#     """
+#     <div style="position: relative; z-index: 1; text-align: center; margin-top: 5rem;">
+#         <h1 style="font-size: 3rem; color: #444;">
+#             Floating Words Fullscreen (Pastel Colors)
+#         </h1>
+#         <p style="font-size: 1.2rem; color: #666;">
+#             단어들이 전체 화면 위에 나타났다 움직이며 사라지는 효과
+#         </p>
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+
+# # HTML 렌더링
+# html(fullscreen_effect, height=100)
+
+# with st.container():
+#     st.write("---")
+#     st.header("Try it yourself!")
+
+# with st.expander("✨ About this effect"):
+#     st.markdown("""
+#     - This effect creates floating words that appear, move, and fade out across the entire screen.
+#     - The words are randomly selected from a predefined sentence and displayed in pastel colors.
+#     - The effect is implemented using HTML, CSS, and JavaScript, and is rendered in Streamlit using the `html` component.
+#     - The floating words layer is positioned above all other content to ensure visibility.
+#     - The words move slowly in random directions and fade in and out smoothly.
+#     """)
+
+
