@@ -13,7 +13,7 @@ Streamlit is an open-source framework for building data-driven dashboards and we
 - background gradient effect
 - aurora effect
 
-![image info](./images/looks_different.gif)
+![image info](./images/main.jpg)
 
 ✨ **Why Streamlit?**
 

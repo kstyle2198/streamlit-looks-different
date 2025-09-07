@@ -50,8 +50,26 @@ with line2_container:
         with st.container(border=True):
             st.image("./images/ripple.jpg", use_container_width=True)
     with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height=350):
+        if st.button(":orange[**Lightning Effect with Streamlit**]", use_container_width=True):
+            st.switch_page("pages/06_lightning.py")   # pages 폴더 안에 sub_page.py 있어야 함
+        with st.container(border=True):
+            st.image("./images/lightning.jpg", use_container_width=True)
+
+line3_container = st.container(horizontal=True, height="stretch")
+with line3_container:
+    with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height=350):
+        if st.button(":green[**Gradient Effect with Streamlit**]", use_container_width=True):
+            st.switch_page("pages/07_gradient.py")   # pages 폴더 안에 sub_page.py 있어야 함
+        with st.container(border=True):
+            st.image("./images/gradient.jpg", use_container_width=True)
+    with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height=350):
+        if st.button(":blue[**Aurora Effect with Streamlit**]", use_container_width=True):
+            st.switch_page("pages/08_aurora.py")   # pages 폴더 안에 sub_page.py 있어야 함
+        with st.container(border=True):
+            st.image("./images/aurora.jpg", use_container_width=True)
+    with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height=350):
         pass
-        # if st.button(":blue[**Distortion Effect with Streamlit**]", use_container_width=True):
-        #     st.switch_page("pages/03_distortion.py")   # pages 폴더 안에 sub_page.py 있어야 함
+        # if st.button(":orange[**Lightning Effect with Streamlit**]", use_container_width=True):
+        #     st.switch_page("pages/06_lightning.py")   # pages 폴더 안에 sub_page.py 있어야 함
         # with st.container(border=True):
-        #     st.image("./images/distortion.jpg", use_container_width=True)
+        #     st.image("./images/lightning.jpg", use_container_width=True)
