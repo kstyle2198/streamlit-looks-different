@@ -228,9 +228,8 @@ function handleResize() {
 function animate() {
     requestAnimationFrame(animate);
     
-    // Clear canvas with a slight fade effect
-    ctx.fillStyle = 'rgba(248, 249, 250, 0.15)';
-    ctx.fillRect(0, 0, width, height);
+    // Clear canvas with a slight fade effect (배경 투명효과)
+    ctx.clearRect(0, 0, width, height);
     
     // Create random ripples occasionally
     if (Math.random() > 0.97) {

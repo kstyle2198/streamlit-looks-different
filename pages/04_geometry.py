@@ -147,9 +147,8 @@ function handleResize() {
 function animate() {
     requestAnimationFrame(animate);
     
-    // Clear canvas with a slight fade effect
-    ctx.fillStyle = 'rgba(248, 249, 250, 0.2)';
-    ctx.fillRect(0, 0, width, height);
+    // Clear canvas with a slight fade effect (배경 투명효과)
+    ctx.clearRect(0, 0, width, height);
     
     // Update and draw points
     for (let i = 0; i < points.length; i++) {
@@ -203,9 +202,6 @@ window.addEventListener('load', initgeometry);
 canvas_html = """
 <canvas id="geometryCanvas"></canvas>
 """
-
-# Combine everything
-# html(canvas_html + geometry_js, width=500, height=500)
 
 # Content
 # st.markdown('<div class="stMainBlockContainer">', unsafe_allow_html=True)
