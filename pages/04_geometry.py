@@ -1,11 +1,10 @@
 import streamlit as st
-import numpy as np
 from streamlit.components.v1 import html
 
 # Page configuration
 st.set_page_config(
-    page_title="geometry Wave Background",
-    page_icon="🌊",
+    page_title="Random Geometry Wave Background",
+    page_icon="✨",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -26,7 +25,7 @@ st.markdown("""
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: -1; /* Canvas를 배경으로 보냅니다 */
         pointer-events: none;
     }
     
@@ -34,50 +33,56 @@ st.markdown("""
     .content {
         position: relative;
         z-index: 1;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.1); /* 투명도 조절 */
         padding: 2rem;
         border-radius: 15px;
         margin: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-    }
-    
-    /* Title styling */
-    .title {
-        font-size: 3rem;
-        color: #1f3a60;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    
-    /* Text styling */
-    .text {
-        font-size: 1.2rem;
-        color: #2c3e50;
-        line-height: 1.6;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px); /* 배경 블러 효과 */
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
 
 # JavaScript for the geometry effect
+# 자동으로 랜덤한 위치에 효과를 생성하는 기능 추가
 geometry_js = """
+<canvas id="geometryCanvas"></canvas>
 <script>
 // Initialize variables
-let canvas, ctx;
+let canvas = document.getElementById('geometryCanvas');
+let ctx = canvas.getContext('2d');
 let points = [];
-let width, height;
+let width = window.innerWidth;
+let height = window.innerHeight;
+canvas.width = width;
+canvas.height = height;
+
 let mouse = {x: 0, y: 0};
 let colors = ['#ff9a9e', '#fad0c4', '#a1c4fd', '#c2e9fb', '#ffecd2', '#fcb69f'];
 
+// <<< NEW FUNCTION >>> 
+// 랜덤한 위치에 파티클 폭발 효과를 생성하는 함수
+function createRandomBurst() {
+    let randomX = Math.random() * width;
+    let randomY = Math.random() * height;
+    
+    // 클릭 효과와 유사하게 15개의 파티클을 랜덤 위치에 생성
+    for (let i = 0; i < 15; i++) {
+        points.push({
+            x: randomX + (Math.random() - 0.5) * 50,
+            y: randomY + (Math.random() - 0.5) * 50,
+            radius: Math.random() * 4 + 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speed: Math.random() * 1 + 0.5,
+            angle: Math.random() * Math.PI * 2
+        });
+    }
+}
+
 // Initialize the canvas
 function initgeometry() {
-    canvas = document.getElementById('geometryCanvas');
-    ctx = canvas.getContext('2d');
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    
     // Create initial points
     for (let i = 0; i < 30; i++) {
         points.push({
@@ -90,13 +95,17 @@ function initgeometry() {
         });
     }
     
-    // Add event listeners
+    // Add event listeners (기존 마우스 이벤트는 그대로 유지)
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('click', handleClick);
     window.addEventListener('resize', handleResize);
     
     // Start animation
     animate();
+
+    // <<< ADDED >>>
+    // 2초마다 createRandomBurst 함수를 호출하여 자동 효과 생성
+    setInterval(createRandomBurst, 2000); // 2000ms = 2 seconds
 }
 
 // Handle mouse move
@@ -104,7 +113,6 @@ function handleMouseMove(e) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     
-    // Add a point near the mouse
     if (Math.random() > 0.7) {
         points.push({
             x: mouse.x + (Math.random() - 0.5) * 100,
@@ -122,7 +130,6 @@ function handleClick(e) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     
-    // Create a geometry effect on click
     for (let i = 0; i < 15; i++) {
         points.push({
             x: mouse.x + (Math.random() - 0.5) * 50,
@@ -146,35 +153,26 @@ function handleResize() {
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    
-    // Clear canvas with a slight fade effect (배경 투명효과)
     ctx.clearRect(0, 0, width, height);
     
-    // Update and draw points
     for (let i = 0; i < points.length; i++) {
         let point = points[i];
         
-        // Move point
         point.x += Math.cos(point.angle) * point.speed;
         point.y += Math.sin(point.angle) * point.speed;
-        
-        // Shrink point
         point.radius -= 0.05;
         
-        // Remove points that are too small
         if (point.radius <= 0) {
             points.splice(i, 1);
             i--;
             continue;
         }
         
-        // Draw point
         ctx.beginPath();
         ctx.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
         ctx.fillStyle = point.color;
         ctx.fill();
         
-        // Draw connecting lines between nearby points
         for (let j = i + 1; j < points.length; j++) {
             let otherPoint = points[j];
             let dx = point.x - otherPoint.x;
@@ -204,40 +202,23 @@ canvas_html = """
 """
 
 # Content
-# st.markdown('<div class="stMainBlockContainer">', unsafe_allow_html=True)
+# CSS의 'content' 클래스를 적용하여 제목이 더 잘 보이도록 개선
 st.markdown(
-        """
+    """
+    <div class="content">
         <h1 style="
-            font-family: 'Arial';
-            font-size: 60px;
+            font-family: 'Arial', sans-serif;
+            font-size: 3rem;
             color: #fcfdff;
-            text-shadow: 2px 2px 4px #aaa;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
             text-align: center;
             ">
-        Geometry Effect with Streamlit
+        Random Geometry Effect with Streamlit
         </h1>
-        """,
-        unsafe_allow_html=True
-    )
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# Add some sample controls
-col1, col2 = st.columns(2)
-with col1:
-    speed = st.slider("Animation Speed", 0.5, 2.0, 1.0, 0.1)
-with col2:
-    density = st.slider("geometry Density", 10, 50, 30, 5)
-
-st.markdown("""
-<p class="text">
-Adjust the sliders to change the animation behavior. The changes will take effect on the next interaction.
-</p>
-""", unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-l1_container = st.container(horizontal=True, height="stretch")
-with l1_container:
-    with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height="stretch"):
-        html(canvas_html + geometry_js, height=300)
-    with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height="stretch"):
-        html(canvas_html + geometry_js, height=300)
+# HTML과 JS를 Streamlit에 렌더링
+html(canvas_html + geometry_js, height=200)

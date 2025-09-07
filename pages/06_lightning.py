@@ -208,7 +208,6 @@ window.addEventListener('load', initLightning);
 canvas_html = '<canvas id="lightningCanvas"></canvas>'
 
 # Main content wrapped in a styled div
-st.markdown('<div class="content">', unsafe_allow_html=True)
 
 st.markdown(
     """
@@ -234,14 +233,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# Center the button
-st.markdown('<div style="display: flex; justify-content: center; margin-top: 20px;">', unsafe_allow_html=True)
-if st.button("수동으로 번개 생성"):
-    st.success("무작위 번개가 주기적으로 생성됩니다. 배경을 클릭하여 직접 생성할 수도 있습니다!")
-st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 # Inject the HTML and JavaScript into the Streamlit app
 html(canvas_html + lightning_js, height=0)

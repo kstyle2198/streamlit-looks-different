@@ -285,27 +285,12 @@ st.markdown(
     )
 
 # Add some sample controls
-col1, col2 = st.columns(2)
-with col1:
-    speed = st.slider("Animation Speed", 0.5, 2.0, 1.0, 0.1)
-with col2:
-    density = st.slider("Ripple Density", 10, 50, 30, 5)
+# col1, col2 = st.columns(2)
+# with col1:
+#     speed = st.slider("Animation Speed", 0.5, 2.0, 1.0, 0.1)
+# with col2:
+#     density = st.slider("Ripple Density", 10, 50, 30, 5)
 
-if st.button("Generate Random Ripples"):
-    st.markdown("""
-    <script>
-    // Generate random ripples
-    for (let i = 0; i < 10; i++) {
-        setTimeout(() => {
-            createRipple(
-                Math.random() * width,
-                Math.random() * height
-            );
-        }, i * 200);
-    }
-    </script>
-    """, unsafe_allow_html=True)
-    st.success("Random ripples generated!")
 
 st.markdown("""
 <p class="text">
@@ -313,6 +298,5 @@ Adjust the sliders to change the animation behavior. The changes will take effec
 </p>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
 
 html(canvas_html + ripple_js, height=0)
