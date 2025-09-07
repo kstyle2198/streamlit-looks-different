@@ -116,26 +116,6 @@ def aurora_effect_01():
   </script>
   """
 
-  # Content
-  st.markdown(
-      """
-      <div class="content">
-          <h1 style="
-              font-family: 'Helvetica Neue', sans-serif;
-              font-size: 3rem;
-              color: #ffffff;
-              text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-          ">
-          ✨ Aurora Gradient Wave Effect ✨
-          </h1>
-          <p style="color:#f0f0f0; font-size:1.2rem;">
-          A soft, modern aurora-style animated background for Streamlit apps.
-          </p>
-      </div>
-      """,
-      unsafe_allow_html=True
-  )
-
   # Inject aurora effect
   html(aurora_js, height=0)
 
@@ -195,7 +175,7 @@ def aurora_effect_02():
           yOffset: Math.random()*height,
           amplitude: Math.random()*150+100,
           wavelength: Math.random()*0.01+0.005,
-          speed: Math.random()*0.5+0.2,
+          speed: Math.random()*0.01+0.1,
           alpha: Math.random()*0.3+0.2
       });
   }
@@ -231,21 +211,7 @@ def aurora_effect_02():
   </script>
   """
 
-  st.markdown(
-      """
-      <div class="content">
-          <h1 style="font-family:'Helvetica Neue',sans-serif;font-size:3rem;color:#fff;text-shadow:2px 2px 8px rgba(0,0,0,0.5);">
-              ✨ Aurora Gradient Wave Effect ✨
-          </h1>
-          <p style="color:#f0f0f0; font-size:1.2rem;">
-              A soft, flowing aurora-style animated background for Streamlit apps.
-          </p>
-      </div>
-      """,
-      unsafe_allow_html=True
-  )
-
-  html(aurora_js, height=0)
+  html(aurora_js, height=300)
 
 
 if __name__ == "__main__":
