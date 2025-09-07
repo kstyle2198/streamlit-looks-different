@@ -68,8 +68,7 @@ with line3_container:
         with st.container(border=True):
             st.image("./images/aurora.jpg", use_container_width=True)
     with st.container(horizontal=False, border=True, width="stretch", vertical_alignment="top", height=350):
-        pass
-        # if st.button(":orange[**Lightning Effect with Streamlit**]", use_container_width=True):
-        #     st.switch_page("pages/06_lightning.py")   # pages 폴더 안에 sub_page.py 있어야 함
-        # with st.container(border=True):
-        #     st.image("./images/lightning.jpg", use_container_width=True)
+        if st.button(":orange[**Random Floating Word Effect with Streamlit**]", use_container_width=True):
+            st.switch_page("pages/09_text_float.py")   # pages 폴더 안에 sub_page.py 있어야 함
+        with st.container(border=True):
+            st.image("./images/floating_word.jpg", use_container_width=True)
